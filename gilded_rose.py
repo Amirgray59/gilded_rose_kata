@@ -28,14 +28,16 @@ class GildedRose(object):
 
     def update_quality(self):
         for item in self.items:
-            
+
             is_sulfuras = item.name == SULFURAS
             is_aged_brie = item.name == AGED_BRIE
             is_backstage = item.name == BACKSTAGE
 
+            if is_sulfuras : 
+                return 
+
             if not is_aged_brie and not is_backstage:
-                if not is_sulfuras:
-                    decrease_quality(item)
+                decrease_quality(item)
             else:
                 if item.quality < maxQuantity:
                     increase_quality(item)
@@ -44,13 +46,11 @@ class GildedRose(object):
                             increase_quality(item)
                         if item.sell_in < 6:
                             increase_quality(item)
-            if not is_sulfuras:
-                decrease_sell_in(item)
+            decrease_sell_in(item)
             if item.sell_in < 0:
                 if not is_aged_brie:
                     if not is_backstage:
-                        if not is_sulfuras:
-                            decrease_quality(item)
+                        decrease_quality(item)
                     else:
                         item.quality = 0
                 else:
